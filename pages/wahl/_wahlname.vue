@@ -84,7 +84,7 @@
             <p v-if="theseError !== ''">
               {{ theseError }}
             </p>
-            <v-form ref="form" v-model="valid" @submit.prevent>
+            <v-form ref="form2" v-model="valid" @submit.prevent>
               <v-text-field
                 v-model="these"
                 label="These"
@@ -308,6 +308,8 @@ export default {
       this.gridApi.setRowData(this.rowData)
       this.save()
       this.dialog = false
+      this.these = ''
+      this.$refs.form2.resetValidation()
     },
     addWahlteilnehmer() {
       this.defaultAnswers[encodeURIComponent(this.wahlteilnehmer)] = 'neutral'
@@ -329,6 +331,8 @@ export default {
         v[encodeURIComponent(this.wahlteilnehmer)] = 'neutral'
       })
       this.save()
+      this.wahlteilnehmer = ''
+      this.$refs.form.resetValidation()
       this.dialog2 = false
     },
     save() {
