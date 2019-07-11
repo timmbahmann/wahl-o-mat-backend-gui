@@ -1,10 +1,10 @@
 import consola from 'consola'
 
 export default function({ store, error, redirect }) {
-  if (!store.state.authUser) {
-    consola.log('authenticated')
-    return redirect('/login')
+  if (store.state.authUser && store.state.authUser.user) {
+    consola.log('authenticated', store.state.authUser)
   } else {
-    consola.log('unauthenticated')
+    consola.log('unauthenticated', store.state.authUser)
+    return redirect('/login')
   }
 }

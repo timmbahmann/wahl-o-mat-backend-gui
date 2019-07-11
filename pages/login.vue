@@ -4,6 +4,7 @@
       <v-layout>
         <v-flex xs12 md4>
           <v-text-field
+            v-if="!$store.state.authUser || !$store.state.authUser.user"
             v-model="formUsername"
             :rules="emailRules"
             label="E-Mail"
@@ -12,6 +13,7 @@
 
         <v-flex xs12 md4>
           <v-text-field
+            v-if="!$store.state.authUser || !$store.state.authUser.user"
             v-model="formPassword"
             :append-icon="show ? 'visibility' : 'visibility_off'"
             :rules="[rules.required]"
@@ -22,16 +24,23 @@
             @click:append="show = !show"
           ></v-text-field>
         </v-flex>
-        <button v-if="!$store.state.authUser" type="submit" @click="login">
+        <button
+          v-if="!$store.state.authUser || !$store.state.authUser.user"
+          type="submit"
+          @click="login"
+        >
           Login
         </button>
-        <button v-else @click.prevent="logout">
+        <div v-if="$store.state.authUser && $store.state.authUser.user">
+          <p>Eingeloggt als {{ $store.state.authUser.user }}</p>
+        </div>
+        <v-btn
+          v-if="$store.state.authUser && $store.state.authUser.user"
+          @click.prevent="logout"
+        >
           Logout
-        </button>
+        </v-btn>
       </v-layout>
-      <div v-if="$store.state.authUser">
-        <p>Logged in {{ $store.state.authUser }}</p>
-      </div>
     </v-container>
   </v-form>
 </template>
